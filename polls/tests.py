@@ -107,6 +107,7 @@ class PollIndexDetailTests(TestCase):
         """
         future_poll = create_poll(question='Future poll.', days=5)
         response = self.client.get(reverse('polls:detail', args=(future_poll.id,)))
+        self.assertEqual(future_poll.pub_date > timezone.now(), True)
         self.assertEqual(response.status_code, 404)
 
     def test_detail_view_with_a_past_poll(self):

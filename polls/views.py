@@ -23,13 +23,13 @@ class DetailView(generic.DetailView):
     model = Poll
     template_name = 'polls/detail.html'
 
-class ResultsView(generic.DetailView):
-    model = Poll
-    template_name = 'polls/results.html'
-
     def get_queryset(self):
         """Excludes unpublished polls."""
         return Poll.objects.filter(pub_date__lte=timezone.now())
+
+class ResultsView(generic.DetailView):
+    model = Poll
+    template_name = 'polls/results.html'
 
 def vote(request, pk):
     p = get_object_or_404(Poll, pk=pk)
